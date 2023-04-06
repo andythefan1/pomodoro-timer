@@ -1,3 +1,5 @@
+import './styles.css';
+
 export default function AccordionRow({ children }) {
-	return <div>{children}</div>;
+	return <li className='accordion-row'>{children}</li>;
 }

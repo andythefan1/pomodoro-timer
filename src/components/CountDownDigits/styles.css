@@ -1,3 +1,6 @@
 .countdown-digits {
-	font-size: 64px;
+	font-size: 14rem;
+	font-family: 'Roboto Mono', monospace;
+	font-weight: 100;
+	flex: 0 1;
 }

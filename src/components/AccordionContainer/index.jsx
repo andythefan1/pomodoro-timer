@@ -1,3 +1,5 @@
-export default function AccordionContainer() {
-	return <div></div>;
+import './styles.css';
+
+export default function AccordionContainer({ children }) {
+	return <ul className='accordion-container'>{children}</ul>;
 }

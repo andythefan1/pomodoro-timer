@@ -1,7 +1,6 @@
 .tab-button {
-	padding: 12px;
-	background: none;
-	font-size: 18px;
+	padding: 12px 4px 4px 4px;
+	font-size: 2rem;
 }
 
 .tab-button.active {

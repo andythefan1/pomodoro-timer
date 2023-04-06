@@ -1,7 +1,6 @@
 .control-button {
-	font-size: 18px;
-	background-color: white;
+	font-size: 1.8rem;
 	border: 1px solid black;
 	border-radius: 8px;
-	padding: 4px 32px;
+	padding: 2rem 3.6rem;
 }

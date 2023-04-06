@@ -6,6 +6,7 @@ export default function CountdownTimer() {
 		<div className='countdown-timer'>
 			<CountDownDigits>1</CountDownDigits>
 			<CountDownDigits>6</CountDownDigits>
+			<CountDownDigits>:</CountDownDigits>
 			<CountDownDigits>0</CountDownDigits>
 			<CountDownDigits>0</CountDownDigits>
 		</div>

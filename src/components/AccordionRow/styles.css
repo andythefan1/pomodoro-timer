@@ -1,0 +1,6 @@
+.accordion-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 1.2rem;
+	font-size: 1.6rem;
+}
