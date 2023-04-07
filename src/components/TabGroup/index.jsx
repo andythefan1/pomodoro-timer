@@ -1,12 +1,16 @@
 import TabButton from '../TabButton';
 import './styles.css';
 
-export default function TabGroup() {
+export default function TabGroup({ activeTab }) {
+	const tabs = ['Pomodoro', 'Short Break', 'Long Break'];
+	console.log(activeTab);
 	return (
 		<div className='tab-group'>
-			<TabButton>Pomodoro</TabButton>
-			<TabButton>Short Break</TabButton>
-			<TabButton>Long Break</TabButton>
+			{tabs.map((tab) => (
+				<TabButton active={tab === activeTab} key={tab}>
+					{tab}
+				</TabButton>
+			))}
 		</div>
 	);
 }

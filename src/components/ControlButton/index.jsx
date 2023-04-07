@@ -1,5 +1,9 @@
 import './styles.css';
 
-export default function ControlButton({ children }) {
-	return <button className='control-button'>{children}</button>;
+export default function ControlButton({ disabled, children }) {
+	return (
+		<button disabled={disabled} className='control-button'>
+			{children}
+		</button>
+	);
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Header from '../Header';
 import TabGroup from '../TabGroup';
 import DigitalClock from '../DigitalClock';
-import TimerControls from '../TimerControls';
+import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
 
 import './styles.css';
@@ -12,7 +12,7 @@ export default function PomodoroTimer() {
 	const [defaultLongBreakDuration, setDefaultLongBreakDuration] = useState(10);
 	const [defaultShortBreakDuration, setDefaultShortBreakDuration] = useState(5);
 
-	const [timerMode, setTimerMode] = useState('pomodoro');
+	const [timerMode, setTimerMode] = useState('Pomodoro');
 	const [timerActive, setTimerActive] = useState(false);
 	const [timeRemaining, setTimeRemaining] = useState(0);
 	const [timerDuration, setTimerDuration] = useState(defaultPomoDuration);
@@ -25,8 +25,11 @@ export default function PomodoroTimer() {
 			<Header></Header>
 			<TabGroup activeTab={timerMode}></TabGroup>
 			<DigitalClock time={timeRemaining}></DigitalClock>
-			<TimerControls timerActive={timerActive}></TimerControls>
-			<Accordion isOpen={accordionIsOpen}></Accordion>
+			<ControlGroup allowPlay={!timerActive}></ControlGroup>
+			<Accordion
+				accordionHeader={'Your pomodoro stats'}
+				isOpen={accordionIsOpen}
+			></Accordion>
 		</div>
 	);
 }

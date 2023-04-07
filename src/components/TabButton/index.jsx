@@ -1,5 +1,7 @@
 import './styles.css';
 
-export default function TabButton({ children }) {
-	return <button className='tab-button active'>{children}</button>;
+export default function TabButton({ active, children }) {
+	return (
+		<button className={`tab-button ${active && 'active'}`}>{children}</button>
+	);
 }
