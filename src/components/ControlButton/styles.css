@@ -1,6 +1,8 @@
 .control-button {
-	font-size: 1.8rem;
 	border: 1px solid black;
 	border-radius: 8px;
-	padding: 2rem 3.6rem;
+}
+
+.control-button .control-button-icon {
+	font-size: 4.8rem;
 }

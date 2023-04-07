@@ -1,8 +1,8 @@
-.countdown-timer {
+.digital-clock {
 	display: flex;
 	flex-direction: row;
 	border: 1px solid black;
 	border-radius: 8px;
 	justify-content: center;
-	gap: 32px;
+	overflow-x: scroll;
 }
