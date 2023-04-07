@@ -3,10 +3,12 @@ import AccordionContainer from '../AccordionContainer';
 import AccordionRow from '../AccordionRow';
 import './styles.css';
 
-export default function Accordion({ isOpen, accordionHeader }) {
+export default function Accordion({ isOpen, header, onClick }) {
 	return (
 		<div className='accordion'>
-			<ExpandToggle isExpanded={isOpen}>{accordionHeader}</ExpandToggle>
+			<ExpandToggle isExpanded={isOpen} onClick={onClick}>
+				{header}
+			</ExpandToggle>
 			{isOpen && (
 				<AccordionContainer>
 					<AccordionRow>

@@ -1,11 +1,11 @@
 import './styles.css';
 
-export default function ExpandToggle({ children, isExpanded }) {
+export default function ExpandToggle({ children, isExpanded, onClick }) {
 	return (
-		<button className='expand-toggle'>
+		<button className='expand-toggle' onClick={onClick}>
 			<div>{children}</div>
 			{isExpanded ? (
-				<span class='material-symbols-outlined expand-toggle-icon'>
+				<span className='material-symbols-outlined expand-toggle-icon'>
 					expand_less
 				</span>
 			) : (
