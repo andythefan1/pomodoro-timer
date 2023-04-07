@@ -14,11 +14,12 @@ export default function PomodoroTimer() {
 
 	const [timerMode, setTimerMode] = useState('Pomodoro');
 	const [timerActive, setTimerActive] = useState(false);
-	const [timeRemaining, setTimeRemaining] = useState(0);
+	const [accordionIsOpen, setAccordionIsOpen] = useState(true);
+	const [timeRemaining, setTimeRemaining] = useState('16:00');
+
 	const [timerDuration, setTimerDuration] = useState(defaultPomoDuration);
 	const [totalCompletedPomos, setTotalCompletedPomos] = useState(0);
 	const [totalCompletedTime, setTotalCompletedTime] = useState(0);
-	const [accordionIsOpen, setAccordionIsOpen] = useState(true);
 
 	return (
 		<div className='pomodoro-timer'>
