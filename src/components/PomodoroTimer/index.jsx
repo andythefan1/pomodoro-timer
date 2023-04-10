@@ -6,6 +6,7 @@ import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
 
 import './styles.css';
+import Table from '../Table';
 
 export default function PomodoroTimer() {
 	// eventually implement custom durations
@@ -67,10 +68,11 @@ export default function PomodoroTimer() {
 			></ControlGroup>
 			<Accordion
 				header={'Your pomodoro stats'}
-				body={timerStats}
 				isOpen={accordionIsOpen}
 				onClick={handleToggleAccordion}
-			></Accordion>
+			>
+				<Table body={timerStats}></Table>
+			</Accordion>
 		</div>
 	);
 }
