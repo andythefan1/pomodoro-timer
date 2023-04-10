@@ -2,9 +2,6 @@ import ControlButton from '../ControlButton';
 import './styles.css';
 
 export default function ControlGroup({ controls, onClick }) {
-	Object.entries(controls).forEach((control) => {
-		console.log(control);
-	});
 	return (
 		<div className='control-group'>
 			{Object.entries(controls).map(([action, control]) => (

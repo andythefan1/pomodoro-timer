@@ -1,0 +1,12 @@
+.table {
+	min-height: 40rem;
+	display: flex;
+	flex-direction: column;
+	font-size: 1.6rem;
+}
+
+.table-row {
+	display: flex;
+	padding: 1.2rem;
+	justify-content: space-between;
+}

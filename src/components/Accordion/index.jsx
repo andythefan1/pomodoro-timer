@@ -1,30 +1,14 @@
 import ExpandToggle from '../ExpandToggle';
-import AccordionContainer from '../AccordionContainer';
-import AccordionRow from '../AccordionRow';
+import Table from '../Table';
 import './styles.css';
 
-export default function Accordion({ isOpen, header, onClick }) {
+export default function Accordion({ isOpen, header, body, onClick }) {
 	return (
 		<div className='accordion'>
 			<ExpandToggle isExpanded={isOpen} onClick={onClick}>
 				{header}
 			</ExpandToggle>
-			{isOpen && (
-				<AccordionContainer>
-					<AccordionRow>
-						<div>ipsem lorem</div>
-						<div>ipsem lorem</div>
-					</AccordionRow>
-					<AccordionRow>
-						<div>ipsem lorem</div>
-						<div>ipsem lorem</div>
-					</AccordionRow>
-					<AccordionRow>
-						<div>ipsem lorem</div>
-						<div>ipsem lorem</div>
-					</AccordionRow>
-				</AccordionContainer>
-			)}
+			{isOpen && <Table body={body}></Table>}
 		</div>
 	);
 }

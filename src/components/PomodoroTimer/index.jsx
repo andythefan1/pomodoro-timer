@@ -8,23 +8,18 @@ import Accordion from '../Accordion';
 import './styles.css';
 
 export default function PomodoroTimer() {
-	const controls = {
-		play: { icon: 'play_arrow', disabled: false },
-		pause: { icon: 'pause', disabled: true },
-		restart: { icon: 'forward_media', disabled: false },
-	};
-
+	// eventually implement custom durations
 	const [defaultPomoDuration, setDefaultPomoDuration] = useState(20);
 	const [defaultLongBreakDuration, setDefaultLongBreakDuration] = useState(10);
 	const [defaultShortBreakDuration, setDefaultShortBreakDuration] = useState(5);
+
+	const [timerDuration, setTimerDuration] = useState(defaultPomoDuration);
 
 	const [timerMode, setTimerMode] = useState('Pomodoro');
 	const [timerActive, setTimerActive] = useState(false);
 	const [accordionIsOpen, setAccordionIsOpen] = useState(true);
 	const [timeRemaining, setTimeRemaining] = useState('16:00');
-	const [timerControls, setTimerControls] = useState(controls);
 
-	const [timerDuration, setTimerDuration] = useState(defaultPomoDuration);
 	const [totalCompletedPomos, setTotalCompletedPomos] = useState(0);
 	const [totalCompletedTime, setTotalCompletedTime] = useState(0);
 
@@ -46,10 +41,17 @@ export default function PomodoroTimer() {
 		}
 	};
 
-	controls['play'].disabled = timerActive;
-	controls['pause'].disabled = !timerActive;
+	const controls = {
+		play: { icon: 'play_arrow', disabled: timerActive ? true : false },
+		pause: { icon: 'pause', disabled: timerActive ? false : true },
+		restart: { icon: 'forward_media', disabled: false },
+	};
 
-	console.log(timerActive, controls);
+	const timerStats = {
+		completedPomos: { text: 'Completed pomodoros', count: totalCompletedPomos },
+		totalPomoTime: { text: 'Total pomodoro time', count: totalCompletedTime },
+	};
+
 	return (
 		<div className='pomodoro-timer'>
 			<Header></Header>
@@ -65,6 +67,7 @@ export default function PomodoroTimer() {
 			></ControlGroup>
 			<Accordion
 				header={'Your pomodoro stats'}
+				body={timerStats}
 				isOpen={accordionIsOpen}
 				onClick={handleToggleAccordion}
 			></Accordion>

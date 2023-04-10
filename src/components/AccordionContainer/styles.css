@@ -1,7 +1,0 @@
-.accordion-container {
-	min-height: 40rem;
-}
-
-.accordion-container li:nth-child(2) {
-	background-color: rgba(0, 0, 0, 0.1);
-}
