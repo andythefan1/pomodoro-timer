@@ -4,64 +4,109 @@ import TabGroup from '../TabGroup';
 import DigitalClock from '../DigitalClock';
 import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
-
-import './styles.css';
 import Table from '../Table';
 
+import { secondsToDigits } from '../../utils/utils';
+import './styles.css';
+
 export default function PomodoroTimer() {
+	const timerModes = ['pomodoro', 'short break', 'long break'];
+
 	// eventually implement custom durations
-	const [defaultPomoDuration, setDefaultPomoDuration] = useState(20);
-	const [defaultLongBreakDuration, setDefaultLongBreakDuration] = useState(10);
-	const [defaultShortBreakDuration, setDefaultShortBreakDuration] = useState(5);
+	const [timerDuration, setTimerDuration] = useState({
+		pomodoro: 20 * 60,
+		'long break': 10 * 60,
+		'short break': 5 * 60,
+	});
 
-	const [timerDuration, setTimerDuration] = useState(defaultPomoDuration);
+	const [timerState, setTimerState] = useState({
+		timerMode: 'pomodoro',
+		timerActive: false,
+		timeRemaining: timerDuration['pomodoro'],
+	});
 
-	const [timerMode, setTimerMode] = useState('Pomodoro');
-	const [timerActive, setTimerActive] = useState(false);
 	const [accordionIsOpen, setAccordionIsOpen] = useState(true);
-	const [timeRemaining, setTimeRemaining] = useState('16:00');
 
-	const [totalCompletedPomos, setTotalCompletedPomos] = useState(0);
-	const [totalCompletedTime, setTotalCompletedTime] = useState(0);
+	const [historicalStats, setHistoricalStats] = useState({
+		totalCompletedPomos: 0,
+		totalCompletedTime: 0,
+	});
 
-	const timerModes = ['Pomodoro', 'Short Break', 'Long Break'];
+	const [countDownTimerId, setCountDownTimerId] = useState();
 
 	const handleToggleAccordion = (e) => {
 		setAccordionIsOpen(!accordionIsOpen);
 	};
 
 	const handleTabClick = (tab) => {
-		setTimerMode(tab);
+		setTimerState({
+			timeRemaining: timerDuration[tab],
+			timerActive: false,
+			timerMode: tab,
+		});
 	};
 
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
-			setTimerActive(true);
-		} else {
-			setTimerActive(false);
+			setCountDownTimerId(setInterval(decrementTimer, 1000));
+		} else if (action === 'restart') {
+			clearInterval(countDownTimerId);
+			setCountDownTimerId();
+
+			setTimerState({
+				...timerState,
+				timeRemaining: timerDuration[timerState.timerMode],
+				timerActive: false,
+			});
+		} else if (action === 'pause') {
+			clearInterval(countDownTimerId);
+			setCountDownTimerId();
+			setTimerState({ ...timerState, timerActive: false });
 		}
 	};
 
+	const decrementTimer = () => {
+		setTimerState((newTimerState) => {
+			return {
+				...newTimerState,
+				timerActive: true,
+				timeRemaining: newTimerState.timeRemaining - 1,
+			};
+		});
+	};
+
+	// props
 	const controls = {
-		play: { icon: 'play_arrow', disabled: timerActive ? true : false },
-		pause: { icon: 'pause', disabled: timerActive ? false : true },
+		play: {
+			icon: 'play_arrow',
+			disabled: timerState.timerActive ? true : false,
+		},
+		pause: { icon: 'pause', disabled: timerState.timerActive ? false : true },
 		restart: { icon: 'forward_media', disabled: false },
 	};
 
 	const timerStats = {
-		completedPomos: { text: 'Completed pomodoros', count: totalCompletedPomos },
-		totalPomoTime: { text: 'Total pomodoro time', count: totalCompletedTime },
+		completedPomos: {
+			text: 'Completed pomodoros',
+			count: historicalStats.totalCompletedPomos,
+		},
+		totalPomoTime: {
+			text: 'Total pomodoro time',
+			count: historicalStats.totalCompletedTime,
+		},
 	};
 
 	return (
 		<div className='pomodoro-timer'>
 			<Header></Header>
 			<TabGroup
-				activeTab={timerMode}
+				activeTab={timerState.timerMode}
 				onClick={handleTabClick}
 				tabs={timerModes}
 			></TabGroup>
-			<DigitalClock time={timeRemaining}></DigitalClock>
+			<DigitalClock
+				time={secondsToDigits(timerState.timeRemaining)}
+			></DigitalClock>
 			<ControlGroup
 				controls={controls}
 				onClick={handleControlButtonClick}
