@@ -8,9 +8,9 @@ export default function DigitalClock({ time }) {
 		<div className='digital-clock'>
 			<DigitalDigits>{digits[0]}</DigitalDigits>
 			<DigitalDigits>{digits[1]}</DigitalDigits>
-			<DigitalDigits>&#58;</DigitalDigits>
 			<DigitalDigits>{digits[2]}</DigitalDigits>
 			<DigitalDigits>{digits[3]}</DigitalDigits>
+			<DigitalDigits>{digits[4]}</DigitalDigits>
 		</div>
 	);
 }
