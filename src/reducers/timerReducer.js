@@ -7,15 +7,17 @@
 export default function timerReducer(timerState, action) {
 	switch (action.type) {
 		case 'startTimer': {
-			console.log('start timer');
-			return { ...timerState, timerId: action.timerId };
+			return {
+				...timerState,
+				timeRemaining: timerState.timeRemaining - 1,
+				timerId: action.timerId,
+				timerActive: true,
+			};
 		}
 		case 'pauseTimer': {
-			console.log('pause timer');
 			return { ...timerState, timerId: null, timerActive: false };
 		}
 		case 'resetTimer': {
-			console.log('reset timer');
 			return {
 				...timerState,
 				timeRemaining: timerState.timerDuration[timerState.timerMode],
@@ -32,8 +34,6 @@ export default function timerReducer(timerState, action) {
 			};
 		}
 		case 'decrementTimer': {
-			console.log('decrement timer tick', timerState);
-
 			return {
 				...timerState,
 				timerActive: true,

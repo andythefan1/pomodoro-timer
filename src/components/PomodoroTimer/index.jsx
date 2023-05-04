@@ -21,14 +21,13 @@ import chime from '../../assets/chime.mp3';
 
 export default function PomodoroTimer() {
 	// TODO: implement custom durations
-	const initialState = {
+	const [timerState, dispatch] = useReducer(timerReducer, {
 		timerId: null,
 		timerMode: timerModes[0],
 		timerActive: false,
 		timeRemaining: defaultTimerDuration[timerModes[0]],
 		timerDuration: defaultTimerDuration,
-	};
-	const [timerState, dispatch] = useReducer(timerReducer, initialState);
+	});
 
 	const [historicalStats, setHistoricalStats] = useState(
 		defaultHistoricalStats
@@ -49,7 +48,6 @@ export default function PomodoroTimer() {
 				type: 'startTimer',
 				timerId: timerId,
 			});
-			console.log('handleControlButtonClick end');
 		} else if (action === 'restart') {
 			clearInterval(timerState.timerId);
 
@@ -65,11 +63,9 @@ export default function PomodoroTimer() {
 	};
 
 	const decrementTimer = () => {
-		console.log('decrement timer called');
 		dispatch({
 			type: 'decrementTimer',
 		});
-		console.log('decrement timer end');
 	};
 
 	const handleTimerExpiration = () => {
@@ -126,7 +122,8 @@ export default function PomodoroTimer() {
 			count: secondsToDigits(historicalStats.totalCompletedPomoTime, true),
 		},
 	};
-	console.log('page rendered: ', timerState);
+
+	// console.log('page rendered: ', timerState);
 	handleTimerExpiration();
 
 	return (
