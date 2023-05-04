@@ -17,14 +17,13 @@ import './styles.css';
 import chime from '../../assets/chime.mp3';
 
 export default function PomodoroTimer() {
-	// eventually implement custom durations
-	const [timerDuration, setTimerDuration] = useState(defaultTimerDuration);
-
+	// TODO: implement custom durations
 	const [timerState, setTimerState] = useState({
 		timerId: null,
 		timerMode: timerModes[0],
 		timerActive: false,
-		timeRemaining: timerDuration[timerModes[0]],
+		timeRemaining: defaultTimerDuration[timerModes[0]],
+		timerDuration: defaultTimerDuration,
 	});
 
 	const [historicalStats, setHistoricalStats] = useState(
@@ -35,7 +34,7 @@ export default function PomodoroTimer() {
 		clearInterval(timerState.timerId);
 		setTimerState({
 			...timerState,
-			timeRemaining: timerDuration[tab],
+			timeRemaining: timerState.timerDuration[tab],
 			timerActive: false,
 			timerMode: tab,
 		});
@@ -54,7 +53,7 @@ export default function PomodoroTimer() {
 
 			setTimerState({
 				...timerState,
-				timeRemaining: timerDuration[timerState.timerMode],
+				timeRemaining: timerState.timerDuration[timerState.timerMode],
 				timerActive: false,
 				timerId: null,
 			});
@@ -89,7 +88,7 @@ export default function PomodoroTimer() {
 
 			setTimerState({
 				...timerState,
-				timeRemaining: timerDuration[timerState.timerMode],
+				timeRemaining: timerState.timerDuration[timerState.timerMode],
 				timerActive: false,
 			});
 
@@ -98,9 +97,10 @@ export default function PomodoroTimer() {
 
 			if (timerState.timerMode === 'pomodoro') {
 				totalCompletedPomos += 1;
-				totalCompletedPomoTime += timerDuration[timerState.timerMode];
+				totalCompletedPomoTime +=
+					timerState.timerDuration[timerState.timerMode];
 			} else {
-				totalBreakTime += timerDuration[timerState.timerMode];
+				totalBreakTime += timerState.timerDuration[timerState.timerMode];
 			}
 
 			setHistoricalStats({
@@ -112,7 +112,7 @@ export default function PomodoroTimer() {
 		}
 	};
 
-	// local state/props
+	// local state
 	const controls = {
 		play: {
 			icon: 'play_arrow',

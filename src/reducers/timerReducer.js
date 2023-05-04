@@ -1,16 +1,13 @@
+
 export default function timerReducer(timerState, action) {
 	switch (action.type) {
-		case 'play': {
+		case 'control': {
 			return;
 		}
-		case 'pause': {
-			return;
-		}
-		case 'reset': {
-			return;
-		}
-		case 'changeMode': {
-			return;
+		case 'mode': {
+			return {...timerState,
+				timeRemaing: 
+			}
 		}
 		default: {
 			throw Error('Unsupported action type: ', action);
