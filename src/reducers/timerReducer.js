@@ -11,9 +11,11 @@ export default function timerReducer(timerState, action) {
 			return { ...timerState, timerId: action.timerId };
 		}
 		case 'pauseTimer': {
+			console.log('pause timer');
 			return { ...timerState, timerId: null, timerActive: false };
 		}
 		case 'resetTimer': {
+			console.log('reset timer');
 			return {
 				...timerState,
 				timeRemaining: timerState.timerDuration[timerState.timerMode],
@@ -24,9 +26,18 @@ export default function timerReducer(timerState, action) {
 		case 'changeMode': {
 			return {
 				...timerState,
-				timeRemaing: timerState.timerDuration[action.mode],
+				timeRemaining: timerState.timerDuration[action.mode],
 				timerActive: false,
 				timerMode: action.mode,
+			};
+		}
+		case 'decrementTimer': {
+			console.log('decrement timer tick', timerState);
+
+			return {
+				...timerState,
+				timerActive: true,
+				timeRemaining: timerState.timeRemaining - 1,
 			};
 		}
 		default: {

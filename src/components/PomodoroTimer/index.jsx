@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
+
 import Header from '../Header';
 import TabGroup from '../TabGroup';
 import DigitalClock from '../DigitalClock';
 import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
 import Table from '../Table';
+
+import timerReducer from '../../reducers/timerReducer';
 
 import { secondsToDigits, playAudio } from '../../utils/utils';
 import {
@@ -18,13 +21,14 @@ import chime from '../../assets/chime.mp3';
 
 export default function PomodoroTimer() {
 	// TODO: implement custom durations
-	const [timerState, setTimerState] = useState({
+	const initialState = {
 		timerId: null,
 		timerMode: timerModes[0],
 		timerActive: false,
 		timeRemaining: defaultTimerDuration[timerModes[0]],
 		timerDuration: defaultTimerDuration,
-	});
+	};
+	const [timerState, dispatch] = useReducer(timerReducer, initialState);
 
 	const [historicalStats, setHistoricalStats] = useState(
 		defaultHistoricalStats
@@ -32,51 +36,38 @@ export default function PomodoroTimer() {
 
 	const handleModeTabClick = (tab) => {
 		clearInterval(timerState.timerId);
-		setTimerState({
-			...timerState,
-			timeRemaining: timerState.timerDuration[tab],
-			timerActive: false,
-			timerMode: tab,
+		dispatch({
+			type: 'changeMode',
+			mode: tab,
 		});
 	};
 
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
-			console.log('handleControlButton clicked');
 			const timerId = setInterval(decrementTimer, 1000);
-			setTimerState({
-				...timerState,
+			dispatch({
+				type: 'startTimer',
 				timerId: timerId,
 			});
 			console.log('handleControlButtonClick end');
 		} else if (action === 'restart') {
 			clearInterval(timerState.timerId);
 
-			setTimerState({
-				...timerState,
-				timeRemaining: timerState.timerDuration[timerState.timerMode],
-				timerActive: false,
-				timerId: null,
+			dispatch({
+				type: 'resetTimer',
 			});
 		} else if (action === 'pause') {
 			clearInterval(timerState.timerId);
-			setTimerState({
-				...timerState,
-				timerId: null,
+			dispatch({
+				type: 'pauseTimer',
 			});
-			setTimerState({ ...timerState, timerActive: false });
 		}
 	};
 
 	const decrementTimer = () => {
 		console.log('decrement timer called');
-		setTimerState((newTimerState) => {
-			console.log('decrement timer tick');
-			return {
-				...newTimerState,
-				timerActive: true,
-				timeRemaining: newTimerState.timeRemaining - 1,
-			};
+		dispatch({
+			type: 'decrementTimer',
 		});
 		console.log('decrement timer end');
 	};
@@ -87,10 +78,8 @@ export default function PomodoroTimer() {
 
 			clearInterval(timerState.timerId);
 
-			setTimerState({
-				...timerState,
-				timeRemaining: timerState.timerDuration[timerState.timerMode],
-				timerActive: false,
+			dispatch({
+				type: 'resetTimer',
 			});
 
 			let { totalCompletedPomos, totalCompletedPomoTime, totalBreakTime } =
@@ -137,7 +126,7 @@ export default function PomodoroTimer() {
 			count: secondsToDigits(historicalStats.totalCompletedPomoTime, true),
 		},
 	};
-	console.log('page rendered');
+	console.log('page rendered: ', timerState);
 	handleTimerExpiration();
 
 	return (
@@ -145,6 +134,7 @@ export default function PomodoroTimer() {
 			<Header></Header>
 			<TabGroup
 				activeTab={timerState.timerMode}
+				dispatch={dispatch}
 				onClick={handleModeTabClick}
 				tabs={timerModes}
 			></TabGroup>
@@ -152,6 +142,7 @@ export default function PomodoroTimer() {
 				time={secondsToDigits(timerState.timeRemaining, true)}
 			></DigitalClock>
 			<ControlGroup
+				dispatch={dispatch}
 				controls={controls}
 				onClick={handleControlButtonClick}
 			></ControlGroup>
