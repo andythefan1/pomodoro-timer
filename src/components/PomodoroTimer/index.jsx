@@ -6,41 +6,38 @@ import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
 import Table from '../Table';
 
-import { secondsToDigits } from '../../utils/utils';
+import { secondsToDigits, playAudio } from '../../utils/utils';
+import {
+	defaultHistoricalStats,
+	defaultTimerDuration,
+	timerModes,
+} from '../../utils/constants';
+
 import './styles.css';
+import chime from '../../assets/chime.mp3';
 
 export default function PomodoroTimer() {
-	const timerModes = ['pomodoro', 'short break', 'long break'];
-
 	// eventually implement custom durations
-	const [timerDuration, setTimerDuration] = useState({
-		pomodoro: 20,
-		'long break': 10,
-		'short break': 5,
-	});
+	const [timerDuration, setTimerDuration] = useState(defaultTimerDuration);
 
 	const [timerState, setTimerState] = useState({
-		timerMode: 'pomodoro',
+		timerId: null,
+		timerMode: timerModes[0],
 		timerActive: false,
-		timeRemaining: timerDuration['pomodoro'],
+		timeRemaining: timerDuration[timerModes[0]],
 	});
 
 	const [accordionIsOpen, setAccordionIsOpen] = useState(true);
-
-	const [historicalStats, setHistoricalStats] = useState({
-		totalCompletedPomos: 0,
-		totalCompletedPomoTime: 0,
-		totalBreakTime: 0,
-	});
-
-	const [countDownTimerId, setCountDownTimerId] = useState();
+	const [historicalStats, setHistoricalStats] = useState(
+		defaultHistoricalStats
+	);
 
 	const handleToggleAccordion = (e) => {
 		setAccordionIsOpen(!accordionIsOpen);
 	};
 
 	const handleModeTabClick = (tab) => {
-		clearInterval(countDownTimerId);
+		clearInterval(timerState.timerId);
 		setTimerState({
 			timeRemaining: timerDuration[tab],
 			timerActive: false,
@@ -50,36 +47,49 @@ export default function PomodoroTimer() {
 
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
-			setCountDownTimerId(setInterval(decrementTimer, 1000));
+			console.log('handleControlButton clicked');
+			setTimerState({
+				...timerState,
+				timerId: setInterval(decrementTimer, 1000),
+			});
+			console.log('handleControlButtonClick end');
 		} else if (action === 'restart') {
-			clearInterval(countDownTimerId);
-			setCountDownTimerId();
+			clearInterval(timerState.timerId);
 
 			setTimerState({
 				...timerState,
 				timeRemaining: timerDuration[timerState.timerMode],
 				timerActive: false,
+				timerId: null,
 			});
 		} else if (action === 'pause') {
-			clearInterval(countDownTimerId);
-			setCountDownTimerId();
+			clearInterval(timerState.timerId);
+			setTimerState({
+				...timerState,
+				timerId: null,
+			});
 			setTimerState({ ...timerState, timerActive: false });
 		}
 	};
 
 	const decrementTimer = () => {
+		console.log('decrement timer called');
 		setTimerState((newTimerState) => {
+			console.log('decrement timer tick');
 			return {
 				...newTimerState,
 				timerActive: true,
 				timeRemaining: newTimerState.timeRemaining - 1,
 			};
 		});
+		console.log('decrement timer end');
 	};
 
 	const handleTimerExpiration = () => {
 		if (timerState.timeRemaining <= 0) {
-			clearInterval(countDownTimerId);
+			playAudio(chime);
+
+			clearInterval(timerState.timerId);
 
 			setTimerState({
 				...timerState,
@@ -130,7 +140,7 @@ export default function PomodoroTimer() {
 			count: secondsToDigits(historicalStats.totalCompletedPomoTime, true),
 		},
 	};
-
+	console.log('page rendered');
 	handleTimerExpiration();
 
 	return (

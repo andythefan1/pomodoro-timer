@@ -4,6 +4,7 @@
 	border: 1px solid black;
 	padding: 3.6rem;
 	row-gap: 2.4rem;
+	border-radius: 8px;
 }
 
 button {

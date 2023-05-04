@@ -1,5 +1,4 @@
 import ExpandToggle from '../ExpandToggle';
-import Table from '../Table';
 import './styles.css';
 
 export default function Accordion({ isOpen, header, children, onClick }) {

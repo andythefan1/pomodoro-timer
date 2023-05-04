@@ -8,3 +8,8 @@ export const secondsToDigits = (seconds, addColon = false) => {
 		return `${mins}${secs}`;
 	}
 };
+
+export const playAudio = (sound) => {
+	const audio = new Audio(sound);
+	audio.play();
+};
