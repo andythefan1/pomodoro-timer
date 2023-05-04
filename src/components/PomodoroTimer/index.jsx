@@ -43,9 +43,10 @@ export default function PomodoroTimer() {
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
 			console.log('handleControlButton clicked');
+			const timerId = setInterval(decrementTimer, 1000);
 			setTimerState({
 				...timerState,
-				timerId: setInterval(decrementTimer, 1000),
+				timerId: timerId,
 			});
 			console.log('handleControlButtonClick end');
 		} else if (action === 'restart') {
