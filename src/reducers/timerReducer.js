@@ -9,6 +9,9 @@ export default function timerReducer(timerState, action) {
 		case 'reset': {
 			return;
 		}
+		case 'changeMode': {
+			return;
+		}
 		default: {
 			throw Error('Unsupported action type: ', action);
 		}

@@ -1,13 +1,21 @@
+import { useState } from 'react';
+
 import ExpandToggle from '../ExpandToggle';
 import './styles.css';
 
-export default function Accordion({ isOpen, header, children, onClick }) {
+export default function Accordion({ header, children }) {
+	const [isExpanded, setIsExpanded] = useState(true);
+
+	const handleExpandToggle = () => {
+		setIsExpanded(!isExpanded);
+	};
+
 	return (
 		<div className='accordion'>
-			<ExpandToggle isExpanded={isOpen} onClick={onClick}>
+			<ExpandToggle isExpanded={isExpanded} onClick={handleExpandToggle}>
 				{header}
 			</ExpandToggle>
-			{isOpen && children}
+			{isExpanded && children}
 		</div>
 	);
 }

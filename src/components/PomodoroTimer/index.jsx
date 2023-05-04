@@ -27,18 +27,14 @@ export default function PomodoroTimer() {
 		timeRemaining: timerDuration[timerModes[0]],
 	});
 
-	const [accordionIsOpen, setAccordionIsOpen] = useState(true);
 	const [historicalStats, setHistoricalStats] = useState(
 		defaultHistoricalStats
 	);
 
-	const handleToggleAccordion = (e) => {
-		setAccordionIsOpen(!accordionIsOpen);
-	};
-
 	const handleModeTabClick = (tab) => {
 		clearInterval(timerState.timerId);
 		setTimerState({
+			...timerState,
 			timeRemaining: timerDuration[tab],
 			timerActive: false,
 			timerMode: tab,
@@ -116,7 +112,7 @@ export default function PomodoroTimer() {
 		}
 	};
 
-	// props
+	// local state/props
 	const controls = {
 		play: {
 			icon: 'play_arrow',
@@ -158,11 +154,7 @@ export default function PomodoroTimer() {
 				controls={controls}
 				onClick={handleControlButtonClick}
 			></ControlGroup>
-			<Accordion
-				header={'Your pomodoro stats'}
-				isOpen={accordionIsOpen}
-				onClick={handleToggleAccordion}
-			>
+			<Accordion header={'Your pomodoro stats'}>
 				<Table body={timerStats}></Table>
 			</Accordion>
 		</div>
