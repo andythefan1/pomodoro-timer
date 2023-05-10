@@ -18,6 +18,7 @@ import {
 
 import './styles.css';
 import chime from '../../assets/chime.mp3';
+import countdown from '../../assets/countdown.mp3';
 
 export default function PomodoroTimer() {
 	// TODO: implement custom durations
@@ -44,6 +45,7 @@ export default function PomodoroTimer() {
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
 			const timerId = setInterval(decrementTimer, 1000);
+			playAudio(countdown);
 			dispatch({
 				type: 'startTimer',
 				timerId: timerId,
@@ -69,7 +71,9 @@ export default function PomodoroTimer() {
 	};
 
 	const handleTimerExpiration = () => {
-		if (timerState.timeRemaining <= 0) {
+		if (timerState.timeRemaining === 3 && timerState.timerActive) {
+			playAudio(countdown);
+		} else if (timerState.timeRemaining <= 0) {
 			playAudio(chime);
 
 			clearInterval(timerState.timerId);
