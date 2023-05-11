@@ -73,6 +73,7 @@ export default function PomodoroTimer() {
 	const handleTimerExpiration = () => {
 		if (timerState.timeRemaining === 3 && timerState.timerActive) {
 			playAudio(countdown);
+			console.log('playing audio');
 		} else if (timerState.timeRemaining <= 0) {
 			playAudio(chime);
 
@@ -127,7 +128,7 @@ export default function PomodoroTimer() {
 		},
 	};
 
-	// console.log('page rendered: ', timerState);
+	console.log('page rendered: ', timerState);
 	handleTimerExpiration();
 
 	return (
