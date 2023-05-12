@@ -1,35 +1,7 @@
-import { useContext, createContext, useReducer } from 'react';
-import { initialState } from '../utils/constants';
-
-const TimerContext = createContext(null);
-const TimerDispatchContext = createContext(null);
-
-// Allows components to access context if necessary
-export const useTimerContext = () => {
-	return useContext(TimerContext);
-};
-
-export const useTimerDispatchContext = () => {
-	return useContext(TimerDispatchContext);
-};
-
-// component that wraps all context and reducer logic in one place
-export function TimerStateProvider({ children }) {
-	const [timerState, dispatch] = useReducer(timerReducer, initialState);
-
-	return (
-		<TimerContext.Provider value={timerState}>
-			<TimerDispatchContext.Provider value={dispatch}>
-				{children}
-			</TimerDispatchContext.Provider>
-		</TimerContext.Provider>
-	);
-}
-
 /**
  *
- * @param timerState
- * @param action
+ * @param {*} timerState
+ * @param {*} action
  * @returns
  */
 export default function timerReducer(timerState, action) {
