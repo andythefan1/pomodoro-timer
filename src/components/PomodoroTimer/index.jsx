@@ -7,7 +7,11 @@ import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
 import Table from '../Table';
 
-import timerReducer from '../../reducers/timerReducer';
+import {
+	TimerStateProvider,
+	useTimerContext,
+	useTimerDispatchContext,
+} from '../../contexts/TimerContext';
 
 import { secondsToDigits, playAudio } from '../../utils/utils';
 import {
@@ -21,14 +25,8 @@ import chime from '../../assets/chime.mp3';
 import countdown from '../../assets/countdown.mp3';
 
 export default function PomodoroTimer() {
-	// TODO: implement custom durations
-	const [timerState, dispatch] = useReducer(timerReducer, {
-		timerId: null,
-		timerMode: timerModes[0],
-		timerActive: false,
-		timeRemaining: defaultTimerDuration[timerModes[0]],
-		timerDuration: defaultTimerDuration,
-	});
+	const timerState = useTimerContext();
+	const dispatch = useTimerDispatchContext();
 
 	const [historicalStats, setHistoricalStats] = useState(
 		defaultHistoricalStats
