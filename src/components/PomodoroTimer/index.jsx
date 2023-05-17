@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useRef, useReducer, useState } from 'react';
 
 import Header from '../Header';
 import TabGroup from '../TabGroup';
@@ -21,9 +21,10 @@ import chime from '../../assets/chime.mp3';
 import countdown from '../../assets/countdown.mp3';
 
 export default function PomodoroTimer() {
+	let timerId = useRef(null);
+
 	// TODO: implement custom durations
 	const [timerState, dispatch] = useReducer(timerReducer, {
-		timerId: null,
 		timerMode: timerModes[0],
 		timerActive: false,
 		timeRemaining: defaultTimerDuration[timerModes[0]],
@@ -35,7 +36,7 @@ export default function PomodoroTimer() {
 	);
 
 	const handleModeTabClick = (tab) => {
-		clearInterval(timerState.timerId);
+		clearInterval(timerId.current);
 		dispatch({
 			type: 'changeMode',
 			mode: tab,
@@ -44,20 +45,19 @@ export default function PomodoroTimer() {
 
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
-			const timerId = setInterval(decrementTimer, 1000);
+			timerId.current = setInterval(decrementTimer, 1000);
 			playAudio(countdown);
 			dispatch({
 				type: 'startTimer',
-				timerId: timerId,
 			});
 		} else if (action === 'restart') {
-			clearInterval(timerState.timerId);
+			clearInterval(timerId.current);
 
 			dispatch({
 				type: 'resetTimer',
 			});
 		} else if (action === 'pause') {
-			clearInterval(timerState.timerId);
+			clearInterval(timerId.current);
 			dispatch({
 				type: 'pauseTimer',
 			});
@@ -77,7 +77,7 @@ export default function PomodoroTimer() {
 		} else if (timerState.timeRemaining <= 0) {
 			playAudio(chime);
 
-			clearInterval(timerState.timerId);
+			clearInterval(timerId.current);
 
 			dispatch({
 				type: 'resetTimer',

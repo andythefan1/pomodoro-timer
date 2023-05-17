@@ -10,19 +10,17 @@ export default function timerReducer(timerState, action) {
 			return {
 				...timerState,
 				timeRemaining: timerState.timeRemaining - 1,
-				timerId: action.timerId,
 				timerActive: true,
 			};
 		}
 		case 'pauseTimer': {
-			return { ...timerState, timerId: null, timerActive: false };
+			return { ...timerState, timerActive: false };
 		}
 		case 'resetTimer': {
 			return {
 				...timerState,
 				timeRemaining: timerState.timerDuration[timerState.timerMode],
 				timerActive: false,
-				timerId: null,
 			};
 		}
 		case 'changeMode': {
