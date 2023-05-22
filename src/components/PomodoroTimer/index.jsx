@@ -71,35 +71,36 @@ export default function PomodoroTimer() {
 	};
 
 	const handleTimerExpiration = () => {
-		if (timerState.timeRemaining === 3 && timerState.timerActive) {
-			playAudio(countdown);
-			console.log('playing audio');
-		} else if (timerState.timeRemaining <= 0) {
-			playAudio(chime);
+		if (timerState.timerActive) {
+			if (timerState.timeRemaining < 4 && timerState.timeRemaining > 0) {
+				playAudio(countdown);
+			} else if (timerState.timeRemaining === 0) {
+				playAudio(chime);
 
-			clearInterval(timerId.current);
+				clearInterval(timerId.current);
 
-			dispatch({
-				type: 'resetTimer',
-			});
+				dispatch({
+					type: 'resetTimer',
+				});
 
-			let { totalCompletedPomos, totalCompletedPomoTime, totalBreakTime } =
-				historicalStats;
+				let { totalCompletedPomos, totalCompletedPomoTime, totalBreakTime } =
+					historicalStats;
 
-			if (timerState.timerMode === 'pomodoro') {
-				totalCompletedPomos += 1;
-				totalCompletedPomoTime +=
-					timerState.timerDuration[timerState.timerMode];
-			} else {
-				totalBreakTime += timerState.timerDuration[timerState.timerMode];
+				if (timerState.timerMode === 'pomodoro') {
+					totalCompletedPomos += 1;
+					totalCompletedPomoTime +=
+						timerState.timerDuration[timerState.timerMode];
+				} else {
+					totalBreakTime += timerState.timerDuration[timerState.timerMode];
+				}
+
+				setHistoricalStats({
+					...historicalStats,
+					totalCompletedPomos: totalCompletedPomos,
+					totalCompletedPomoTime: totalCompletedPomoTime,
+					totalBreakTime: totalBreakTime,
+				});
 			}
-
-			setHistoricalStats({
-				...historicalStats,
-				totalCompletedPomos: totalCompletedPomos,
-				totalCompletedPomoTime: totalCompletedPomoTime,
-				totalBreakTime: totalBreakTime,
-			});
 		}
 	};
 
@@ -128,7 +129,6 @@ export default function PomodoroTimer() {
 		},
 	};
 
-	console.log('page rendered: ', timerState);
 	handleTimerExpiration();
 
 	return (
