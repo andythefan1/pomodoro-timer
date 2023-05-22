@@ -4,9 +4,9 @@ import './styles.css';
 
 export default function Header() {
 	return (
-		<div className='header'>
+		<nav className='header'>
 			<AppHeader></AppHeader>
 			<SettingsButton></SettingsButton>
-		</div>
+		</nav>
 	);
 }
