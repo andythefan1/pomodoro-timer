@@ -1,0 +1,9 @@
+.tab-button {
+	padding: 12px 4px 7px 4px;
+	font-size: 2rem;
+}
+
+.tab-button.active {
+	border: 0;
+	border-bottom: 1px solid black;
+}

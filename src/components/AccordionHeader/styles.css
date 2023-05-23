@@ -1,0 +1,13 @@
+.expand-toggle {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid black;
+	padding: 0.6rem 1.2rem;
+	font-size: 1.6rem;
+	width: 100%;
+}
+
+.expand-toggle-icon {
+	font-size: 3.6rem;
+}
