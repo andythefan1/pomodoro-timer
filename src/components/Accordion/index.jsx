@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import ExpandToggle from '../ExpandToggle';
+import AccordionHeader from '../AccordionHeader';
 import './styles.css';
 
 export default function Accordion({ header, children }) {
@@ -12,9 +12,9 @@ export default function Accordion({ header, children }) {
 
 	return (
 		<div className='accordion'>
-			<ExpandToggle isExpanded={isExpanded} onClick={handleExpandToggle}>
+			<AccordionHeader isExpanded={isExpanded} onClick={handleExpandToggle}>
 				{header}
-			</ExpandToggle>
+			</AccordionHeader>
 			{isExpanded && children}
 		</div>
 	);

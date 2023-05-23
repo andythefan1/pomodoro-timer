@@ -1,4 +1,4 @@
-import TabButton from '../TabButton';
+import Tab from '../Tab';
 import './styles.css';
 
 export default function TabGroup({ tabs, activeTab, onClick }) {
@@ -6,14 +6,14 @@ export default function TabGroup({ tabs, activeTab, onClick }) {
 		<ul className='tab-group'>
 			{tabs.map((tab) => (
 				<li>
-					<TabButton
+					<Tab
 						active={tab === activeTab}
 						key={tab}
 						name={tab}
 						onClick={onClick}
 					>
 						{tab}
-					</TabButton>
+					</Tab>
 				</li>
 			))}
 		</ul>
