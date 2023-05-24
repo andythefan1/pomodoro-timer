@@ -1,6 +1,6 @@
 import './styles.css';
 
-export default function ExpandToggle({ children, isExpanded, onClick }) {
+export default function AccordionHeader({ children, isExpanded, onClick }) {
 	return (
 		<button className='expand-toggle' onClick={onClick}>
 			<div>{children}</div>
