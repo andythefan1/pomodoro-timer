@@ -12,7 +12,8 @@ import timerReducer from '../../reducers/timerReducer';
 import { secondsToDigits, playAudio } from '../../utils/utils';
 import {
 	defaultHistoricalStats,
-	defaultTimerDuration,
+	defaultDurationSelection,
+	defaultTimerDurations,
 	timerModes,
 } from '../../utils/constants';
 
@@ -25,21 +26,39 @@ export default function PomodoroTimer() {
 
 	// TODO: implement custom durations
 	const [timerState, dispatch] = useReducer(timerReducer, {
-		timerMode: timerModes[0],
+		timerMode: 0,
 		timerActive: false,
-		timeRemaining: defaultTimerDuration[timerModes[0]],
-		timerDuration: defaultTimerDuration,
+		timeRemaining:
+			defaultTimerDurations[timerModes[0]][
+				defaultDurationSelection[timerModes[0]]
+			],
+		timerDurationSelection: defaultDurationSelection,
+		timerDurations: defaultTimerDurations,
 	});
 
 	const [historicalStats, setHistoricalStats] = useState(
 		defaultHistoricalStats
 	);
 
-	const handleModeTabClick = (tab) => {
+	const [showDurationOptions, setShowDurationOptions] = useState(false);
+
+	const handleModeTabClick = (index) => {
+		if (timerState.timerMode === index) {
+			setShowDurationOptions(!showDurationOptions);
+		} else {
+			clearInterval(timerId.current);
+			dispatch({
+				type: 'changeMode',
+				mode: index,
+			});
+		}
+	};
+
+	const handleDurationSelectionClick = (index) => {
 		clearInterval(timerId.current);
 		dispatch({
-			type: 'changeMode',
-			mode: tab,
+			type: 'changeDurationSelection',
+			index: index,
 		});
 	};
 
@@ -83,28 +102,29 @@ export default function PomodoroTimer() {
 					type: 'resetTimer',
 				});
 
-				let { totalCompletedPomos, totalCompletedPomoTime, totalBreakTime } =
-					historicalStats;
+				const updatedHistoricalStats = { ...historicalStats };
 
-				if (timerState.timerMode === 'pomodoro') {
-					totalCompletedPomos += 1;
-					totalCompletedPomoTime +=
-						timerState.timerDuration[timerState.timerMode];
+				if (timerModeName === 'pomodoro') {
+					updatedHistoricalStats.totalCompletedPomos += 1;
+					updatedHistoricalStats.totalCompletedPomoTime +=
+						timerState.timerDurations[timerModeName][
+							timerState.timerDurationSelection[timerModeName]
+						];
 				} else {
-					totalBreakTime += timerState.timerDuration[timerState.timerMode];
+					updatedHistoricalStats.totalBreakTime +=
+						timerState.timerDurations[timerModeName][
+							timerState.timerDurationSelection[timerModeName]
+						];
 				}
 
-				setHistoricalStats({
-					...historicalStats,
-					totalCompletedPomos: totalCompletedPomos,
-					totalCompletedPomoTime: totalCompletedPomoTime,
-					totalBreakTime: totalBreakTime,
-				});
+				setHistoricalStats(updatedHistoricalStats);
 			}
 		}
 	};
 
 	// local state
+	const timerModeName = timerModes[timerState.timerMode];
+
 	const controls = {
 		play: {
 			icon: 'play_arrow',
@@ -119,32 +139,41 @@ export default function PomodoroTimer() {
 			text: 'Completed pomodoros',
 			count: historicalStats.totalCompletedPomos,
 		},
-		totalBreakTime: {
-			text: 'Total break time',
-			count: secondsToDigits(historicalStats.totalBreakTime, true),
-		},
 		totalPomoTime: {
 			text: 'Total pomodoro time',
 			count: secondsToDigits(historicalStats.totalCompletedPomoTime, true),
+		},
+		totalBreakTime: {
+			text: 'Total break time',
+			count: secondsToDigits(historicalStats.totalBreakTime, true),
 		},
 	};
 
 	handleTimerExpiration();
 
+	const timerDurations = timerState.timerDurations[timerModeName].map(
+		(duration) => secondsToDigits(duration, true)
+	);
+
 	return (
-		<div className='pomodoro-timer'>
+		<div className='pomodoro-timer outline'>
 			<Header></Header>
 			<TabGroup
 				activeTab={timerState.timerMode}
-				dispatch={dispatch}
 				onClick={handleModeTabClick}
 				tabs={timerModes}
 			></TabGroup>
+			{showDurationOptions && (
+				<TabGroup
+					activeTab={timerState.timerDurationSelection[timerModeName]}
+					onClick={handleDurationSelectionClick}
+					tabs={timerDurations}
+				></TabGroup>
+			)}
 			<DigitalClock
 				time={secondsToDigits(timerState.timeRemaining, true)}
 			></DigitalClock>
 			<ControlGroup
-				dispatch={dispatch}
 				controls={controls}
 				onClick={handleControlButtonClick}
 			></ControlGroup>
