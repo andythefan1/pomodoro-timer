@@ -1,5 +1,15 @@
+h1,
+h2,
+h3 {
+	margin: 0;
+}
+
 li {
 	list-style: none;
+}
+
+ul {
+	padding: 0;
 }
 
 button {
@@ -12,14 +22,16 @@ button {
 	border: 1px solid black;
 	border-radius: 8px;
 }
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 48;
+}
 
 .pomodoro-timer {
 	display: flex;
 	flex-direction: column;
 	padding: 3.6rem;
 	row-gap: 2.4rem;
-	max-width: 60rem;
-}
-.material-symbols-outlined {
-	font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 48;
+	max-width: 48rem;
+	overflow: hidden;
+	margin: 0 auto;
 }
