@@ -97,9 +97,6 @@ export default function PomodoroTimer() {
 		if (timerState.timerStart) {
 			if (timeRemaining < 4 && timeRemaining > 0) {
 				playAudio(countdown);
-			} else if (timeRemaining.toFixed() % 30 === 0) {
-				// workaround to prevent throttling of setInterval in background tab
-				playAudio(countdown);
 			} else if (timeRemaining <= 0) {
 				playAudio(chime);
 
@@ -125,6 +122,9 @@ export default function PomodoroTimer() {
 				}
 
 				setHistoricalStats(updatedHistoricalStats);
+			} else if (timeRemaining.toFixed() % 30 === 0) {
+				// workaround to prevent throttling of setInterval in background tab
+				playAudio(countdown);
 			}
 		}
 	};
