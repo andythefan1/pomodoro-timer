@@ -186,11 +186,15 @@ export default function PomodoroTimer() {
 					tabs={timerDurations}
 				></TabGroup>
 			)}
-			<DigitalClock time={secondsToDigits(timeRemaining, true)}></DigitalClock>
-			<ControlGroup
-				controls={controls}
-				onClick={handleControlButtonClick}
-			></ControlGroup>
+			<div className='timer-container outline'>
+				<DigitalClock
+					time={secondsToDigits(timeRemaining, true)}
+				></DigitalClock>
+				<ControlGroup
+					controls={controls}
+					onClick={handleControlButtonClick}
+				></ControlGroup>
+			</div>
 			<Accordion header={'Your pomodoro stats'}>
 				<Table body={timerStats}></Table>
 			</Accordion>

@@ -19,7 +19,7 @@ button {
 }
 
 .outline {
-	border: 1px solid black;
+	border: 1px solid #212529;
 	border-radius: 8px;
 }
 .material-symbols-outlined {
@@ -34,4 +34,11 @@ button {
 	max-width: 48rem;
 	overflow: hidden;
 	margin: 0 auto;
+}
+
+.timer-container {
+	display: flex;
+	flex-direction: column;
+	row-gap: 2.4rem;
+	padding: 2.4rem;
 }
