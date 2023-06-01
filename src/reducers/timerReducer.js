@@ -9,35 +9,29 @@ import { timerModes } from '../utils/constants';
 export default function timerReducer(timerState, action) {
 	switch (action.type) {
 		case 'startTimer': {
+			console.log(`startTime: ${action.startTime}`);
 			return {
 				...timerState,
-				timeRemaining: timerState.timeRemaining - 1,
-				timerActive: true,
+				timerStart: action.startTime,
 			};
 		}
 		case 'pauseTimer': {
-			return { ...timerState, timerActive: false };
+			return {
+				...timerState,
+				timerStart: null,
+			};
 		}
 		case 'resetTimer': {
 			const timerModeName = timerModes[timerState.timerMode];
 			return {
 				...timerState,
-				timeRemaining:
-					timerState.timerDurations[timerModeName][
-						timerState.timerDurationSelection[timerModeName]
-					],
-				timerActive: false,
 			};
 		}
 		case 'changeMode': {
 			const timerMode = timerModes[action.mode];
 			return {
 				...timerState,
-				timeRemaining:
-					timerState.timerDurations[timerMode][
-						timerState.timerDurationSelection[timerMode]
-					],
-				timerActive: false,
+				timerStart: null,
 				timerMode: action.mode,
 			};
 		}
@@ -45,19 +39,18 @@ export default function timerReducer(timerState, action) {
 			const timerModeName = timerModes[timerState.timerMode];
 			return {
 				...timerState,
-				timeRemaining: timerState.timerDurations[timerModeName][action.index],
 				timerDurationSelection: {
 					...timerState.timerDurationSelection,
 					[timerModeName]: action.index,
 				},
-				timerActive: false,
+				timerStart: null,
 			};
 		}
-		case 'decrementTimer': {
+
+		case 'updateTimer': {
+			console.log(`updateTimer action: `, timerState);
 			return {
 				...timerState,
-				timerActive: true,
-				timeRemaining: timerState.timeRemaining - 1,
 			};
 		}
 		default: {
