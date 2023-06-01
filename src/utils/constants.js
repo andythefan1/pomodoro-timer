@@ -8,8 +8,8 @@ export const defaultDurationSelection = {
 
 export const defaultTimerDurations = {
 	pomodoro: [5 * 60, 10 * 60, 20 * 60],
-	'long break': [10, 10 * 60],
-	'short break': [5, 5 * 60],
+	'long break': [60, 120, 10 * 60],
+	'short break': [5, 15, 30, 5 * 60],
 };
 
 export const defaultHistoricalStats = {

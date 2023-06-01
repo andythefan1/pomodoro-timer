@@ -29,6 +29,7 @@ export default function PomodoroTimer() {
 		timerMode: 0,
 		timerStart: null,
 		timerNow: null,
+		timeElapsed: 0,
 		timerDurationSelection: defaultDurationSelection,
 		timerDurations: defaultTimerDurations,
 	});
@@ -65,12 +66,15 @@ export default function PomodoroTimer() {
 				type: 'startTimer',
 				startTime: Date.now(),
 			});
-			timerId.current = setInterval(() => {}, 1000);
-			setTimeout(() => {
-				console.log('5 seconds elapsed');
-			}, 5000);
+
+			timerId.current = setInterval(() => {
+				dispatch({
+					type: 'tick',
+					timerNow: Date.now(),
+				});
+			}, 1000);
+
 			playAudio(countdown);
-			console.log(`playing`);
 		} else if (action === 'restart') {
 			clearInterval(timerId.current);
 
@@ -86,16 +90,20 @@ export default function PomodoroTimer() {
 	};
 
 	const handleTimerExpiration = () => {
-		console.log(`handleTimerExpiration: `, timerState);
+		console.log(
+			`${new Date().toTimeString()}\n timeRemaining: ${timeRemaining} handleTimerExpiration: `,
+			timerState
+		);
 		if (timerState.timerStart) {
-			if (timeRemaining > 0) {
-			}
 			if (timeRemaining < 4 && timeRemaining > 0) {
+				playAudio(countdown);
+			} else if (timeRemaining.toFixed() % 30 === 0) {
+				// workaround to prevent throttling of setInterval in background tab
 				playAudio(countdown);
 			} else if (timeRemaining <= 0) {
 				playAudio(chime);
 
-				// clearInterval(timerId.current);
+				clearInterval(timerId.current);
 
 				dispatch({
 					type: 'resetTimer',
@@ -123,8 +131,15 @@ export default function PomodoroTimer() {
 
 	// local state
 	const timerModeName = timerModes[timerState.timerMode];
-	debugger;
-	const timeRemaining = 0;
+	const timerDuration =
+		timerState.timerDurations[timerModeName][
+			timerState.timerDurationSelection[timerModeName]
+		];
+
+	const timeRemaining =
+		timerDuration -
+		timerState.timeElapsed -
+		(timerState.timerNow - timerState.timerStart) / 1000;
 
 	const controls = {
 		play: {
@@ -154,7 +169,6 @@ export default function PomodoroTimer() {
 		(duration) => secondsToDigits(duration, true)
 	);
 
-	// console.log(`${timerState}`);
 	handleTimerExpiration();
 
 	return (

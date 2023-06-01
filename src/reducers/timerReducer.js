@@ -13,25 +13,36 @@ export default function timerReducer(timerState, action) {
 			return {
 				...timerState,
 				timerStart: action.startTime,
+				timerNow: action.startTime,
 			};
 		}
 		case 'pauseTimer': {
+			// record already elapsed time
+			const { timerStart, timerNow } = timerState;
+			const timeElapsed =
+				timerState.timeElapsed + (timerNow - timerStart) / 1000;
+
 			return {
 				...timerState,
+				timeElapsed: timeElapsed,
 				timerStart: null,
+				timerNow: null,
 			};
 		}
 		case 'resetTimer': {
-			const timerModeName = timerModes[timerState.timerMode];
 			return {
 				...timerState,
+				timeElapsed: 0,
+				timerStart: null,
+				timerNow: null,
 			};
 		}
 		case 'changeMode': {
-			const timerMode = timerModes[action.mode];
 			return {
 				...timerState,
+				timeElapsed: 0,
 				timerStart: null,
+				timerNow: null,
 				timerMode: action.mode,
 			};
 		}
@@ -44,13 +55,14 @@ export default function timerReducer(timerState, action) {
 					[timerModeName]: action.index,
 				},
 				timerStart: null,
+				timerNow: null,
+				timeElapsed: 0,
 			};
 		}
-
-		case 'updateTimer': {
-			console.log(`updateTimer action: `, timerState);
+		case 'tick': {
 			return {
 				...timerState,
+				timerNow: action.timerNow,
 			};
 		}
 		default: {
