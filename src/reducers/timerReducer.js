@@ -9,35 +9,40 @@ import { timerModes } from '../utils/constants';
 export default function timerReducer(timerState, action) {
 	switch (action.type) {
 		case 'startTimer': {
+			console.log(`startTime: ${action.startTime}`);
 			return {
 				...timerState,
-				timeRemaining: timerState.timeRemaining - 1,
-				timerActive: true,
+				timerStart: action.startTime,
+				timerNow: action.startTime,
 			};
 		}
 		case 'pauseTimer': {
-			return { ...timerState, timerActive: false };
-		}
-		case 'resetTimer': {
-			const timerModeName = timerModes[timerState.timerMode];
+			// record already elapsed time
+			const { timerStart, timerNow } = timerState;
+			const timeElapsed =
+				timerState.timeElapsed + (timerNow - timerStart) / 1000;
+
 			return {
 				...timerState,
-				timeRemaining:
-					timerState.timerDurations[timerModeName][
-						timerState.timerDurationSelection[timerModeName]
-					],
-				timerActive: false,
+				timeElapsed: timeElapsed,
+				timerStart: null,
+				timerNow: null,
+			};
+		}
+		case 'resetTimer': {
+			return {
+				...timerState,
+				timeElapsed: 0,
+				timerStart: null,
+				timerNow: null,
 			};
 		}
 		case 'changeMode': {
-			const timerMode = timerModes[action.mode];
 			return {
 				...timerState,
-				timeRemaining:
-					timerState.timerDurations[timerMode][
-						timerState.timerDurationSelection[timerMode]
-					],
-				timerActive: false,
+				timeElapsed: 0,
+				timerStart: null,
+				timerNow: null,
 				timerMode: action.mode,
 			};
 		}
@@ -45,19 +50,19 @@ export default function timerReducer(timerState, action) {
 			const timerModeName = timerModes[timerState.timerMode];
 			return {
 				...timerState,
-				timeRemaining: timerState.timerDurations[timerModeName][action.index],
 				timerDurationSelection: {
 					...timerState.timerDurationSelection,
 					[timerModeName]: action.index,
 				},
-				timerActive: false,
+				timerStart: null,
+				timerNow: null,
+				timeElapsed: 0,
 			};
 		}
-		case 'decrementTimer': {
+		case 'tick': {
 			return {
 				...timerState,
-				timerActive: true,
-				timeRemaining: timerState.timeRemaining - 1,
+				timerNow: action.timerNow,
 			};
 		}
 		default: {

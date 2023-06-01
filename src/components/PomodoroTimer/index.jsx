@@ -27,11 +27,9 @@ export default function PomodoroTimer() {
 	// TODO: implement custom durations
 	const [timerState, dispatch] = useReducer(timerReducer, {
 		timerMode: 0,
-		timerActive: false,
-		timeRemaining:
-			defaultTimerDurations[timerModes[0]][
-				defaultDurationSelection[timerModes[0]]
-			],
+		timerStart: null,
+		timerNow: null,
+		timeElapsed: 0,
 		timerDurationSelection: defaultDurationSelection,
 		timerDurations: defaultTimerDurations,
 	});
@@ -64,11 +62,19 @@ export default function PomodoroTimer() {
 
 	const handleControlButtonClick = (action) => {
 		if (action === 'play') {
-			timerId.current = setInterval(decrementTimer, 1000);
-			playAudio(countdown);
 			dispatch({
 				type: 'startTimer',
+				startTime: Date.now(),
 			});
+
+			timerId.current = setInterval(() => {
+				dispatch({
+					type: 'tick',
+					timerNow: Date.now(),
+				});
+			}, 1000);
+
+			playAudio(countdown);
 		} else if (action === 'restart') {
 			clearInterval(timerId.current);
 
@@ -83,17 +89,18 @@ export default function PomodoroTimer() {
 		}
 	};
 
-	const decrementTimer = () => {
-		dispatch({
-			type: 'decrementTimer',
-		});
-	};
-
 	const handleTimerExpiration = () => {
-		if (timerState.timerActive) {
-			if (timerState.timeRemaining < 4 && timerState.timeRemaining > 0) {
+		console.log(
+			`${new Date().toTimeString()}\n timeRemaining: ${timeRemaining} handleTimerExpiration: `,
+			timerState
+		);
+		if (timerState.timerStart) {
+			if (timeRemaining < 4 && timeRemaining > 0) {
 				playAudio(countdown);
-			} else if (timerState.timeRemaining === 0) {
+			} else if (timeRemaining.toFixed() % 30 === 0) {
+				// workaround to prevent throttling of setInterval in background tab
+				playAudio(countdown);
+			} else if (timeRemaining <= 0) {
 				playAudio(chime);
 
 				clearInterval(timerId.current);
@@ -124,13 +131,22 @@ export default function PomodoroTimer() {
 
 	// local state
 	const timerModeName = timerModes[timerState.timerMode];
+	const timerDuration =
+		timerState.timerDurations[timerModeName][
+			timerState.timerDurationSelection[timerModeName]
+		];
+
+	const timeRemaining =
+		timerDuration -
+		timerState.timeElapsed -
+		(timerState.timerNow - timerState.timerStart) / 1000;
 
 	const controls = {
 		play: {
 			icon: 'play_arrow',
-			disabled: timerState.timerActive ? true : false,
+			disabled: timerState.timerStart ? true : false,
 		},
-		pause: { icon: 'pause', disabled: timerState.timerActive ? false : true },
+		pause: { icon: 'pause', disabled: timerState.timerStart ? false : true },
 		restart: { icon: 'forward_media', disabled: false },
 	};
 
@@ -149,11 +165,11 @@ export default function PomodoroTimer() {
 		},
 	};
 
-	handleTimerExpiration();
-
 	const timerDurations = timerState.timerDurations[timerModeName].map(
 		(duration) => secondsToDigits(duration, true)
 	);
+
+	handleTimerExpiration();
 
 	return (
 		<div className='pomodoro-timer outline'>
@@ -170,9 +186,7 @@ export default function PomodoroTimer() {
 					tabs={timerDurations}
 				></TabGroup>
 			)}
-			<DigitalClock
-				time={secondsToDigits(timerState.timeRemaining, true)}
-			></DigitalClock>
+			<DigitalClock time={secondsToDigits(timeRemaining, true)}></DigitalClock>
 			<ControlGroup
 				controls={controls}
 				onClick={handleControlButtonClick}

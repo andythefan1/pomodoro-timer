@@ -1,6 +1,6 @@
 .digital-digits {
-	font-size: 14rem;
+	font-size: 12rem;
 	font-family: 'Roboto Mono', monospace;
 	font-weight: 100;
-	flex: 0 1;
+	line-height: 1.2;
 }

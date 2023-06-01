@@ -1,6 +1,7 @@
 export const secondsToDigits = (seconds, addColon = false) => {
-	const mins = `${Math.floor(seconds / 60)}`.padStart(2, 0);
-	const secs = `${seconds % 60}`.padStart(2, 0);
+	const roundedSeconds = seconds.toFixed();
+	const mins = `${Math.floor(roundedSeconds / 60)}`.padStart(2, 0);
+	const secs = `${roundedSeconds % 60}`.padStart(2, 0);
 
 	if (addColon) {
 		return `${mins}:${secs}`;
