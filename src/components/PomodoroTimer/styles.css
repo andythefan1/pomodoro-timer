@@ -19,8 +19,8 @@ button {
 }
 
 .outline {
-	border: 1px solid black;
-	border-radius: 8px;
+	border: 1px solid #212529;
+	border-radius: 10px;
 }
 .material-symbols-outlined {
 	font-variation-settings: 'FILL' 0, 'wght' 100, 'GRAD' 0, 'opsz' 48;
@@ -29,9 +29,21 @@ button {
 .pomodoro-timer {
 	display: flex;
 	flex-direction: column;
-	padding: 3.6rem;
+	padding: 2.4rem;
 	row-gap: 2.4rem;
-	max-width: 48rem;
 	overflow: hidden;
-	margin: 0 auto;
+}
+
+.timer-container {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	row-gap: 2.4rem;
+	width: 100%;
+}
+
+.container {
+	max-width: 42rem;
+	align-self: center;
+	overflow-x: hidden;
 }

@@ -11,7 +11,7 @@ export default function Accordion({ header, children }) {
 	};
 
 	return (
-		<div className='accordion outline'>
+		<div className='accordion container outline'>
 			<AccordionHeader isExpanded={isExpanded} onClick={handleExpandToggle}>
 				{header}
 			</AccordionHeader>

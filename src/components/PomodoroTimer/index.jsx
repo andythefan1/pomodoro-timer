@@ -7,7 +7,10 @@ import ControlGroup from '../ControlGroup';
 import Accordion from '../Accordion';
 import Table from '../Table';
 
-import timerReducer from '../../reducers/timerReducer';
+import {
+	timerReducer,
+	TIMER_REDUCER_ACTIONS,
+} from '../../reducers/timerReducer';
 
 import { secondsToDigits, playAudio } from '../../utils/utils';
 import {
@@ -90,7 +93,10 @@ export default function PomodoroTimer() {
 	};
 
 	const handleTimerExpiration = () => {
-		console.log(
+		if (timeRemaining <= -1) {
+			console.warn(`Warn: timer expired past timer duration ${timeRemaining}`);
+		}
+		console.info(
 			`${new Date().toTimeString()}\n timeRemaining: ${timeRemaining} handleTimerExpiration: `,
 			timerState
 		);
@@ -172,25 +178,29 @@ export default function PomodoroTimer() {
 	handleTimerExpiration();
 
 	return (
-		<div className='pomodoro-timer outline'>
+		<div className='pomodoro-timer'>
 			<Header></Header>
-			<TabGroup
-				activeTab={timerState.timerMode}
-				onClick={handleModeTabClick}
-				tabs={timerModes}
-			></TabGroup>
-			{showDurationOptions && (
+			<div className='timer-container container'>
 				<TabGroup
-					activeTab={timerState.timerDurationSelection[timerModeName]}
-					onClick={handleDurationSelectionClick}
-					tabs={timerDurations}
+					activeTab={timerState.timerMode}
+					onClick={handleModeTabClick}
+					tabs={timerModes}
 				></TabGroup>
-			)}
-			<DigitalClock time={secondsToDigits(timeRemaining, true)}></DigitalClock>
-			<ControlGroup
-				controls={controls}
-				onClick={handleControlButtonClick}
-			></ControlGroup>
+				{showDurationOptions && (
+					<TabGroup
+						activeTab={timerState.timerDurationSelection[timerModeName]}
+						onClick={handleDurationSelectionClick}
+						tabs={timerDurations}
+					></TabGroup>
+				)}
+				<DigitalClock
+					time={secondsToDigits(timeRemaining, true)}
+				></DigitalClock>
+				<ControlGroup
+					controls={controls}
+					onClick={handleControlButtonClick}
+				></ControlGroup>
+			</div>
 			<Accordion header={'Your pomodoro stats'}>
 				<Table body={timerStats}></Table>
 			</Accordion>
