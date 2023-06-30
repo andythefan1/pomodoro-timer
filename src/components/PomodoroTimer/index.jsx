@@ -9,7 +9,7 @@ import Table from '../Table';
 
 import {
 	timerReducer,
-	TIMER_REDUCER_ACTIONS,
+	// TIMER_REDUCER_ACTIONS,
 } from '../../reducers/timerReducer';
 
 import { secondsToDigits, playAudio } from '../../utils/utils';
