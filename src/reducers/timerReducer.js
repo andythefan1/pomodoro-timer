@@ -1,15 +1,23 @@
 import { timerModes } from '../utils/constants';
 
+export const TIMER_REDUCER_ACTIONS = {
+	START_TIMER: 'START_TIMER',
+	PAUSE_TIMER: 'PAUSE_TIMER',
+	RESET_TIMER: 'RESET_TIMER',
+	CHANGE_TIMER_MODE: 'CHANGE_TIMER_MODE',
+	CHANGE_TIMER_DURATION: 'CHANGE_TIMER_DURATION',
+	TICK_TIMER: 'TICK_TIMER',
+};
+
 /**
  *
  * @param {*} timerState
  * @param {*} action
  * @returns
  */
-export default function timerReducer(timerState, action) {
+export function timerReducer(timerState, action) {
 	switch (action.type) {
 		case 'startTimer': {
-			console.log(`startTime: ${action.startTime}`);
 			return {
 				...timerState,
 				timerStart: action.startTime,
