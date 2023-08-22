@@ -1,4 +1,9 @@
+.app-header {
+	display: flex;
+	align-items: center;
+}
+
 .app-header-logo {
-	padding: 0.8rem;
-	font-size: 3.2rem;
+	font-size: 2rem;
+	padding-left: 0.2rem;
 }

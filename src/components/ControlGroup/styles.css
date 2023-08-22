@@ -1,5 +1,21 @@
 .control-group {
-	display: flex;
-	justify-content: center;
-	column-gap: 4.2rem;
+	display: grid;
+	grid-template-columns: 1fr 60% 1fr;
+	gap: 0.8rem;
+}
+
+.control-group button {
+	min-height: 6.4rem;
+	min-width: 6.4rem;
+}
+
+.control-group .play-btn,
+.control-group .pause-btn {
+	grid-column: 2;
+	padding: 0 0;
+}
+
+.control-group .restart-btn {
+	justify-self: start;
+	grid-column: 3;
 }

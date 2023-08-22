@@ -1,8 +1,82 @@
-html {
+/*
+	SPACING SYSTEM (px)
+	2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+	
+	TYPOGRAPHY
+	FONT SIZE SYSTEM (px)
+	10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+	LINE HEIGHT (no unit)
+	Default: 1
+	Small: 1.05
+	Medium: 1.2
+	Paragraph default: 1.6
+
+	LETTER SPACING
+	letter-spacing: -0.5px
+	
+	FONT WEIGHTS
+	Thin: 100
+	Default: 400
+	Medium: 500
+	
+	COLOR SYSTEM
+	Primary color: 
+		Main: 
+			red - #f03e3e
+		Tints:
+			light red - ff6b6b
+		Shades:
+			dark red - #c92a2a
+
+	Greys:
+		Main:
+			medium grey - #868e96
+		Tint:
+			light grey - #ced4da
+		Shade:
+			dark grey - #343a40
+	
+	Accents - 
+		Lime green - #3EF071
+
+
+*/
+
+* {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
 
+	--main-red: #f03e3e;
+	--grey-dark-red: ;
+}
+
+html {
 	font-size: 62.5%;
 	line-height: 1;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+li {
+	list-style: none;
+}
+
+ul {
+	padding: 0;
+}
+
+button {
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+.material-symbols-outlined {
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }

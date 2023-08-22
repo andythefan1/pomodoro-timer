@@ -1,4 +1,13 @@
 .header {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
+
+	border-bottom: 1px solid lightgray;
+	padding: 0 1.2rem 1.2rem 1rem;
+}
+
+.header-nav-menu {
+	display: flex;
+	gap: 1.2rem;
 }

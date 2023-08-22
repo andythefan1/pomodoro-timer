@@ -148,12 +148,15 @@ export default function PomodoroTimer() {
 		(timerState.timerNow - timerState.timerStart) / 1000;
 
 	const controls = {
-		play: {
-			icon: 'play_arrow',
+		start: {
+			text: 'play',
 			disabled: timerState.timerStart ? true : false,
 		},
-		pause: { icon: 'pause', disabled: timerState.timerStart ? false : true },
-		restart: { icon: 'forward_media', disabled: false },
+		pause: {
+			text: 'pause',
+			disabled: timerState.timerStart ? false : true,
+		},
+		restart: { text: 'restart', icon: 'replay', disabled: false },
 	};
 
 	const timerStats = {
@@ -176,7 +179,6 @@ export default function PomodoroTimer() {
 	);
 
 	handleTimerExpiration();
-
 	return (
 		<div className='pomodoro-timer'>
 			<Header></Header>
@@ -201,7 +203,7 @@ export default function PomodoroTimer() {
 					onClick={handleControlButtonClick}
 				></ControlGroup>
 			</div>
-			<Accordion header={'Your pomodoro stats'}>
+			<Accordion header={'Pomodoro stats'}>
 				<Table body={timerStats}></Table>
 			</Accordion>
 		</div>
