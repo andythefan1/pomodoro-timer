@@ -64,7 +64,7 @@ export default function PomodoroTimer() {
 	};
 
 	const handleControlButtonClick = (action) => {
-		if (action === 'play') {
+		if (action === 'start') {
 			dispatch({
 				type: 'startTimer',
 				startTime: Date.now(),
@@ -149,7 +149,7 @@ export default function PomodoroTimer() {
 
 	const controls = {
 		start: {
-			text: 'play',
+			text: 'start',
 			disabled: timerState.timerStart ? true : false,
 		},
 		pause: {
@@ -182,7 +182,7 @@ export default function PomodoroTimer() {
 	return (
 		<div className='pomodoro-timer'>
 			<Header></Header>
-			<div className='timer-container container'>
+			<div className='timer-container container rounded'>
 				<TabGroup
 					activeTab={timerState.timerMode}
 					onClick={handleModeTabClick}
@@ -203,9 +203,17 @@ export default function PomodoroTimer() {
 					onClick={handleControlButtonClick}
 				></ControlGroup>
 			</div>
-			<Accordion header={'Pomodoro stats'}>
-				<Table body={timerStats}></Table>
-			</Accordion>
+			<div className='container'>
+				{' '}
+				<Accordion header={'Pomodoro stats'}>
+					<Table body={timerStats}></Table>
+				</Accordion>
+			</div>
+			<div className='container'>
+				<Accordion header={'Completed Tasks'}>
+					<Table body={timerStats}></Table>
+				</Accordion>
+			</div>
 		</div>
 	);
 }

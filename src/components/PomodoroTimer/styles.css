@@ -1,6 +1,6 @@
-.outline {
-	border: 1px solid #212529;
-	border-radius: 10px;
+.rounded {
+	/* border: 1px solid #212529; */
+	border-radius: 8px;
 }
 
 .pomodoro-timer {
@@ -19,10 +19,14 @@
 	flex-direction: column;
 	row-gap: 2.4rem;
 	width: 100%;
+	background-color: #eee;
+	padding: 1.6rem 0;
 }
 
 .container {
-	max-width: 42rem;
+	width: 100%;
+	max-width: 48rem;
 	align-self: center;
 	overflow-x: hidden;
+	margin-bottom: 1.2rem;
 }

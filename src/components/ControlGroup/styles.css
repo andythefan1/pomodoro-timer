@@ -1,18 +1,20 @@
 .control-group {
 	display: grid;
-	grid-template-columns: 1fr 60% 1fr;
+	grid-template-columns: 1fr 50% 1fr;
 	gap: 0.8rem;
 }
 
 .control-group button {
 	min-height: 6.4rem;
 	min-width: 6.4rem;
+	font-size: 1.8rem;
 }
 
 .control-group .play-btn,
 .control-group .pause-btn {
 	grid-column: 2;
 	padding: 0 0;
+	background-color: white;
 }
 
 .control-group .restart-btn {

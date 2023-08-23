@@ -2,9 +2,9 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 1px solid #212529;
+	border-bottom: 1px solid lightgrey;
 	padding: 0 1rem;
-	font-size: 1.4rem;
+	font-size: 1.8rem;
 	width: 100%;
 }
 

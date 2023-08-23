@@ -8,7 +8,7 @@ export default function ControlGroup({ controls, onClick }) {
 			{!start.disabled && (
 				<button
 					disabled={start.disabled}
-					className='play-btn control-button outline'
+					className='play-btn control-button rounded'
 					onClick={() => onClick(start.text)}
 				>
 					<span className='material-symbols-rounded control-button-icon'>
@@ -20,7 +20,7 @@ export default function ControlGroup({ controls, onClick }) {
 			{!pause.disabled && (
 				<button
 					disabled={pause.disabled}
-					className='pause-btn control-button outline'
+					className='pause-btn control-button rounded'
 					onClick={() => onClick(pause.text)}
 				>
 					<span className='material-symbols-rounded control-button-icon'>
@@ -31,7 +31,7 @@ export default function ControlGroup({ controls, onClick }) {
 			)}
 			<button
 				disabled={restart.disabled}
-				className='restart-btn control-button outline'
+				className='restart-btn control-button'
 				onClick={() => onClick(restart.text)}
 			>
 				<span className='material-symbols-rounded control-button-icon'>

@@ -4,10 +4,39 @@
 	align-items: center;
 
 	border-bottom: 1px solid lightgray;
-	padding: 0 1.2rem 1.2rem 1rem;
+	padding: 0 1rem 1rem 1rem;
 }
 
 .header-nav-menu {
 	display: flex;
 	gap: 1.2rem;
+}
+
+.header-nav-menu {
+	display: none;
+}
+
+.header-app-logo {
+	display: flex;
+	align-items: center;
+}
+
+.app-logo-text {
+	display: inline-block;
+	font-size: 2.2rem;
+}
+
+@media (min-width: 480px) {
+	.header-nav-menu-mobile {
+		display: none;
+	}
+	.header-nav-menu {
+		display: block;
+	}
+}
+
+@media (min-width: 768px) {
+	.header-icon {
+		font-size: 3.2rem;
+	}
 }
