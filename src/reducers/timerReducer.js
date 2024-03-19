@@ -15,7 +15,7 @@ export const TIMER_REDUCER_ACTIONS = {
  * @param {*} action
  * @returns
  */
-export function timerReducer(timerState, action) {
+export const timerReducer = (timerState, action) => {
 	switch (action.type) {
 		case 'startTimer': {
 			return {
@@ -77,4 +77,4 @@ export function timerReducer(timerState, action) {
 			throw Error('Unsupported action type: ', action);
 		}
 	}
-}
+};

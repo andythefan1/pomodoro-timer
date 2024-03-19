@@ -1,10 +1,8 @@
 import './App.css';
-import PomodoroTimer from './components/PomodoroTimer';
+import PomodoroTimer from './containers/PomodoroTimer';
 
-export default function App() {
-	return (
-		<main>
-			<PomodoroTimer></PomodoroTimer>
-		</main>
-	);
-}
+const App = () => {
+	return <PomodoroTimer></PomodoroTimer>;
+};
+
+export default App;

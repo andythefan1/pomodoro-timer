@@ -1,23 +1,23 @@
-.control-group {
+.button-group {
 	display: grid;
 	grid-template-columns: 1fr 50% 1fr;
 	gap: 0.8rem;
 }
 
-.control-group button {
+.button-group button {
 	min-height: 6.4rem;
 	min-width: 6.4rem;
 	font-size: 1.8rem;
 }
-
-.control-group .play-btn,
-.control-group .pause-btn {
+.button-group .play-btn,
+.button-group .pause-btn {
+	border: 1px solid black;
 	grid-column: 2;
 	padding: 0 0;
 	background-color: white;
 }
 
-.control-group .restart-btn {
+.button-group .restart-btn {
 	justify-self: start;
 	grid-column: 3;
 }

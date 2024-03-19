@@ -1,7 +1,6 @@
-import DigitalDigits from '../DigitalDigits';
 import './styles.css';
 
-export default function DigitalClock({ time }) {
+const DigitalClock = ({ time }) => {
 	const digits = time.split('');
 
 	return (
@@ -13,4 +12,10 @@ export default function DigitalClock({ time }) {
 			<DigitalDigits>{digits[4]}</DigitalDigits>
 		</div>
 	);
-}
+};
+
+export const DigitalDigits = ({ children }) => {
+	return <div className='digital-digits'>{children}</div>;
+};
+
+export default DigitalClock;

@@ -1,11 +1,11 @@
 import { useRef, useReducer, useState } from 'react';
 
-import Header from '../Header';
-import TabGroup from '../TabGroup';
-import DigitalClock from '../DigitalClock';
-import ControlGroup from '../ControlGroup';
-import Accordion from '../Accordion';
-import Table from '../Table';
+import Header from '../../components/Header';
+import TabGroup from '../../components/TabGroup';
+import DigitalClock from '../../components/DigitalClock';
+import ButtonGroup from '../../components/ButtonGroup';
+import { Accordion } from '../../components/Accordion';
+import Table from '../../components/Table';
 
 import {
 	timerReducer,
@@ -24,7 +24,7 @@ import './styles.css';
 import chime from '../../assets/chime.mp3';
 import countdown from '../../assets/countdown.mp3';
 
-export default function PomodoroTimer() {
+export const PomodoroTimer = () => {
 	let timerId = useRef(null);
 
 	// TODO: implement custom durations
@@ -198,13 +198,12 @@ export default function PomodoroTimer() {
 				<DigitalClock
 					time={secondsToDigits(timeRemaining, true)}
 				></DigitalClock>
-				<ControlGroup
+				<ButtonGroup
 					controls={controls}
 					onClick={handleControlButtonClick}
-				></ControlGroup>
+				></ButtonGroup>
 			</div>
 			<div className='container'>
-				{' '}
 				<Accordion header={'Pomodoro stats'}>
 					<Table body={timerStats}></Table>
 				</Accordion>
@@ -216,4 +215,6 @@ export default function PomodoroTimer() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default PomodoroTimer;

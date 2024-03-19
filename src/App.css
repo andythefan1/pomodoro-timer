@@ -47,9 +47,6 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
-
-	--main-red: #f03e3e;
-	--grey-dark-red: ;
 }
 
 html {
@@ -59,14 +56,6 @@ html {
 
 body {
 	font-family: 'Roboto', sans-serif;
-}
-
-li {
-	list-style: none;
-}
-
-ul {
-	padding: 0;
 }
 
 button {

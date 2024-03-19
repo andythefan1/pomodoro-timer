@@ -1,7 +1,7 @@
 import Tab from '../Tab';
 import './styles.css';
 
-export default function TabGroup({ tabs, activeTab, onClick }) {
+const TabGroup = ({ tabs, activeTab, onClick }) => {
 	return (
 		<ul className='tab-group'>
 			{tabs.map((tab, index) => (
@@ -13,4 +13,6 @@ export default function TabGroup({ tabs, activeTab, onClick }) {
 			))}
 		</ul>
 	);
-}
+};
+
+export default TabGroup;

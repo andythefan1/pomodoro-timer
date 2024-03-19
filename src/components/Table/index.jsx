@@ -1,6 +1,6 @@
 import './styles.css';
 
-export default function Table({ body }) {
+const Table = ({ body }) => {
 	const generateRows = (body) => {
 		return Object.entries(body).map(([data, value]) => (
 			<div className='table-row' key={data}>
@@ -13,4 +13,6 @@ export default function Table({ body }) {
 	const rows = generateRows(body);
 
 	return <div className='table'>{rows}</div>;
-}
+};
+
+export default Table;
