@@ -1,6 +1,6 @@
 import './styles.css';
 
-export default function ControlGroup({ controls, onClick }) {
+const ControlGroup = ({ controls, onClick }) => {
 	const { start, pause, restart } = controls;
 
 	return (
@@ -40,4 +40,6 @@ export default function ControlGroup({ controls, onClick }) {
 			</button>
 		</div>
 	);
-}
+};
+
+export default ControlGroup;

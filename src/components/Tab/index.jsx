@@ -1,6 +1,6 @@
 import './styles.css';
 
-export default function Tab({ active, children, onClick, index }) {
+const Tab = ({ active, children, onClick, index }) => {
 	return (
 		<button
 			className={`tab-button ${active && 'active'}`}
@@ -9,4 +9,6 @@ export default function Tab({ active, children, onClick, index }) {
 			{children}
 		</button>
 	);
-}
+};
+
+export default Tab;

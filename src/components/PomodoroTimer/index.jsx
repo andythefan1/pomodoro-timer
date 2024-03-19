@@ -4,7 +4,7 @@ import Header from '../Header';
 import TabGroup from '../TabGroup';
 import DigitalClock from '../DigitalClock';
 import ControlGroup from '../ControlGroup';
-import Accordion from '../Accordion';
+import { Accordion } from '../Accordion';
 import Table from '../Table';
 
 import {
@@ -24,7 +24,7 @@ import './styles.css';
 import chime from '../../assets/chime.mp3';
 import countdown from '../../assets/countdown.mp3';
 
-export default function PomodoroTimer() {
+export const PomodoroTimer = () => {
 	let timerId = useRef(null);
 
 	// TODO: implement custom durations
@@ -204,7 +204,6 @@ export default function PomodoroTimer() {
 				></ControlGroup>
 			</div>
 			<div className='container'>
-				{' '}
 				<Accordion header={'Pomodoro stats'}>
 					<Table body={timerStats}></Table>
 				</Accordion>
@@ -216,4 +215,6 @@ export default function PomodoroTimer() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default PomodoroTimer;

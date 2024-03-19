@@ -1,21 +1,29 @@
 import { useState } from 'react';
 
-import AccordionHeader from '../AccordionHeader';
 import './styles.css';
 
-export default function Accordion({ header, children }) {
-	const [isExpanded, setIsExpanded] = useState(true);
+export const Accordion = ({ header, children, isExpanded = true }) => {
+	const [showBody, setShowBody] = useState(isExpanded);
 
 	const handleExpandToggle = () => {
-		setIsExpanded(!isExpanded);
+		setShowBody(!isExpanded);
 	};
 
 	return (
 		<div className='accordion'>
-			<AccordionHeader isExpanded={isExpanded} onClick={handleExpandToggle}>
-				{header}
-			</AccordionHeader>
-			{isExpanded && children}
+			<button className='expand-toggle' onClick={handleExpandToggle}>
+				<div>{header}</div>
+				{showBody ? (
+					<span className='material-symbols-rounded expand-toggle-icon'>
+						expand_less
+					</span>
+				) : (
+					<span className='material-symbols-rounded expand-toggle-icon'>
+						expand_more
+					</span>
+				)}
+			</button>
+			{showBody && children}
 		</div>
 	);
-}
+};

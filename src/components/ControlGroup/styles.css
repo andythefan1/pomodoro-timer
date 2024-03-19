@@ -9,9 +9,9 @@
 	min-width: 6.4rem;
 	font-size: 1.8rem;
 }
-
 .control-group .play-btn,
 .control-group .pause-btn {
+	border: 1px solid black;
 	grid-column: 2;
 	padding: 0 0;
 	background-color: white;
