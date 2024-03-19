@@ -1,9 +1,9 @@
 import { useRef, useReducer, useState } from 'react';
 
 import Header from '../../components/Header';
-import TabGroup from '../../components/TabGroup';
+import TabGroup from '../TabGroup';
 import DigitalClock from '../../components/DigitalClock';
-import ButtonGroup from '../../components/ButtonGroup';
+import ButtonGroup from '../ButtonGroup';
 import { Accordion } from '../../components/Accordion';
 import Table from '../../components/Table';
 

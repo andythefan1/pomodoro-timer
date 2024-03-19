@@ -1,4 +1,4 @@
-import Tab from '../Tab';
+import Tab from '../../components/Tab';
 import './styles.css';
 
 const TabGroup = ({ tabs, activeTab, onClick }) => {
