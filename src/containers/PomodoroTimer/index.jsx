@@ -1,11 +1,11 @@
 import { useRef, useReducer, useState } from 'react';
 
-import Header from '../Header';
-import TabGroup from '../TabGroup';
-import DigitalClock from '../DigitalClock';
-import ControlGroup from '../ControlGroup';
-import { Accordion } from '../Accordion';
-import Table from '../Table';
+import Header from '../../components/Header';
+import TabGroup from '../../components/TabGroup';
+import DigitalClock from '../../components/DigitalClock';
+import ButtonGroup from '../../components/ButtonGroup';
+import { Accordion } from '../../components/Accordion';
+import Table from '../../components/Table';
 
 import {
 	timerReducer,
@@ -198,10 +198,10 @@ export const PomodoroTimer = () => {
 				<DigitalClock
 					time={secondsToDigits(timeRemaining, true)}
 				></DigitalClock>
-				<ControlGroup
+				<ButtonGroup
 					controls={controls}
 					onClick={handleControlButtonClick}
-				></ControlGroup>
+				></ButtonGroup>
 			</div>
 			<div className='container'>
 				<Accordion header={'Pomodoro stats'}>

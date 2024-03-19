@@ -1,10 +1,10 @@
 import './styles.css';
 
-const ControlGroup = ({ controls, onClick }) => {
+const ButtonGroup = ({ controls, onClick }) => {
 	const { start, pause, restart } = controls;
 
 	return (
-		<div className='control-group'>
+		<div className='button-group'>
 			{!start.disabled && (
 				<button
 					disabled={start.disabled}
@@ -42,4 +42,4 @@ const ControlGroup = ({ controls, onClick }) => {
 	);
 };
 
-export default ControlGroup;
+export default ButtonGroup;
